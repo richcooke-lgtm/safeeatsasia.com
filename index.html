@@ -5,89 +5,343 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safe Eats Asia — Eat Safely Across Asia</title>
 <meta name="description" content="AI-powered food safety app for travellers with dietary restrictions. Analyse any Asian dish, identify allergens and hear waiter phrases in Thai, Khmer, Vietnamese and more.">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Nunito', sans-serif; background: #FDF6EC; color: #2C2C2C; }
-  header { background: linear-gradient(135deg, #E8821A, #C4622D); padding: 40px 20px; text-align: center; }
-  header h1 { color: white; font-size: 2.5em; font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-  header p { color: white; font-size: 1.2em; font-style: italic; margin-top: 10px; }
-  .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
-  .tagline { font-size: 1.3em; line-height: 1.6; margin-bottom: 30px; }
-  .features { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(232,130,26,0.1); }
-  .features h2 { color: #E8821A; font-size: 1.4em; margin-bottom: 20px; }
-  .feature { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 1.05em; }
-  .feature span { margin-right: 12px; font-size: 1.3em; }
-  .download-btn { display: block; background: #E8821A; color: white; text-align: center; padding: 18px 40px; border-radius: 50px; font-size: 1.2em; font-weight: 700; text-decoration: none; box-shadow: 0 4px 15px rgba(232,130,26,0.4); margin-bottom: 40px; }
-  .download-btn:hover { background: #C4622D; }
-  .languages { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(232,130,26,0.1); }
-  .languages h2 { color: #E8821A; font-size: 1.4em; margin-bottom: 15px; }
-  .lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .lang-item { background: #FDF6EC; border-radius: 10px; padding: 12px; text-align: center; font-weight: 600; }
-  .privacy { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 12px rgba(232,130,26,0.1); }
-  .privacy h2 { color: #E8821A; font-size: 1.4em; margin-bottom: 15px; }
-  .privacy h3 { margin: 15px 0 8px; font-size: 1em; color: #C4622D; }
-  .privacy p { line-height: 1.6; margin-bottom: 10px; font-size: 0.95em; }
-  footer { background: #C4622D; color: white; text-align: center; padding: 20px; font-size: 0.9em; }
-  footer a { color: white; }
-</style>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Nunito', sans-serif; background: #FDF6EC; color: #2C2C2C; }
+
+/* HERO */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: url('https://images.unsplash.com/photo-1559314809-0d155014e29e?w=1600&q=80') center/cover no-repeat;
+}
+.hero-overlay {
+  position: absolute; top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(135deg, rgba(232,130,26,0.85), rgba(196,98,45,0.85));
+}
+.hero-content { position: relative; z-index: 1; padding: 40px 20px; max-width: 800px; }
+.hero h1 { color: white; font-size: 3.5em; font-weight: 900; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); line-height: 1.1; margin-bottom: 20px; }
+.hero p { color: white; font-size: 1.4em; font-style: italic; margin-bottom: 40px; opacity: 0.95; }
+.hero-btn { display: inline-block; background: white; color: #E8821A; padding: 18px 50px; border-radius: 50px; font-size: 1.2em; font-weight: 900; text-decoration: none; box-shadow: 0 8px 25px rgba(0,0,0,0.2); transition: transform 0.2s; }
+.hero-btn:hover { transform: translateY(-2px); }
+.hero-sub { color: white; font-size: 0.95em; margin-top: 15px; opacity: 0.8; }
+
+/* TRUST BAR */
+.trust-bar { background: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.trust-bar p { font-size: 0.95em; color: #888; margin-bottom: 12px; }
+.trust-icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
+.trust-icon { background: #FDF6EC; border-radius: 50px; padding: 8px 20px; font-size: 0.9em; font-weight: 700; color: #E8821A; }
+
+/* SECTIONS */
+.section { padding: 80px 20px; }
+.section-dark { background: #2C2C2C; color: white; }
+.section-orange { background: linear-gradient(135deg, #E8821A, #C4622D); color: white; }
+.container { max-width: 900px; margin: 0 auto; }
+.section-title { font-size: 2em; font-weight: 900; text-align: center; margin-bottom: 15px; }
+.section-subtitle { text-align: center; font-size: 1.1em; opacity: 0.8; margin-bottom: 50px; }
+
+/* FOOD PHOTOS */
+.photo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 0; }
+.photo-strip img { width: 100%; height: 200px; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+
+/* HOW IT WORKS */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.step { text-align: center; background: white; border-radius: 20px; padding: 35px 25px; box-shadow: 0 4px 20px rgba(232,130,26,0.1); }
+.step-number { width: 60px; height: 60px; background: linear-gradient(135deg, #E8821A, #C4622D); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.6em; font-weight: 900; color: white; }
+.step h3 { font-size: 1.1em; font-weight: 800; margin-bottom: 10px; color: #E8821A; }
+.step p { font-size: 0.95em; line-height: 1.5; color: #666; }
+
+/* FEATURES */
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.feature-card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 15px; }
+.feature-icon { font-size: 2em; flex-shrink: 0; }
+.feature-card h3 { font-size: 1em; font-weight: 800; margin-bottom: 6px; }
+.feature-card p { font-size: 0.9em; color: #666; line-height: 1.4; }
+
+/* LANGUAGES */
+.lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.lang-card { background: rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: blur(10px); }
+.lang-flag { font-size: 2.5em; margin-bottom: 8px; }
+.lang-name { font-weight: 800; font-size: 1em; }
+.lang-sub { font-size: 0.8em; opacity: 0.8; margin-top: 4px; }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.pricing-card { background: white; border-radius: 24px; padding: 40px 30px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+.pricing-card.featured { background: linear-gradient(135deg, #E8821A, #C4622D); color: white; transform: scale(1.03); }
+.pricing-card h3 { font-size: 1.3em; font-weight: 900; margin-bottom: 10px; }
+.pricing-price { font-size: 2.5em; font-weight: 900; margin: 15px 0; }
+.pricing-price span { font-size: 0.4em; font-weight: 600; vertical-align: top; margin-top: 10px; display: inline-block; }
+.pricing-features { list-style: none; margin: 20px 0; text-align: left; }
+.pricing-features li { padding: 8px 0; font-size: 0.95em; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.pricing-card.featured .pricing-features li { border-bottom: 1px solid rgba(255,255,255,0.2); }
+.pricing-features li:before { content: "✓ "; font-weight: 900; color: #2D9B5A; }
+.pricing-card.featured .pricing-features li:before { color: white; }
+.pricing-btn { display: block; padding: 14px; border-radius: 50px; font-weight: 800; text-decoration: none; margin-top: 20px; font-size: 1em; }
+.pricing-btn-free { background: #FDF6EC; color: #E8821A; }
+.pricing-btn-paid { background: white; color: #E8821A; }
+
+/* ALLERGENS */
+.allergen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+.allergen-card { background: white; border-radius: 16px; padding: 20px 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+.allergen-icon { font-size: 2.5em; margin-bottom: 8px; }
+.allergen-name { font-weight: 800; font-size: 0.9em; }
+
+/* SCREENSHOT PLACEHOLDER */
+.screenshot-area { background: #2C2C2C; border-radius: 24px; padding: 40px; text-align: center; color: white; margin-bottom: 20px; }
+.screenshot-area p { opacity: 0.6; font-size: 0.9em; }
+.phone-mockup { display: inline-block; background: #1a1a1a; border-radius: 40px; padding: 20px; border: 3px solid #444; width: 200px; height: 380px; display: flex; align-items: center; justify-content: center; margin: 20px 10px; }
+
+/* PRIVACY */
+.privacy-section { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+.privacy-section h2 { color: #E8821A; font-size: 1.5em; margin-bottom: 20px; }
+.privacy-section h3 { color: #C4622D; font-size: 1em; margin: 20px 0 8px; }
+.privacy-section p { line-height: 1.7; color: #555; font-size: 0.95em; margin-bottom: 10px; }
+
+/* FOOTER */
+footer { background: #1a1a1a; color: white; padding: 40px 20px; text-align: center; }
+footer p { opacity: 0.6; font-size: 0.9em; margin-bottom: 15px; }
+footer a { color: #E8821A; text-decoration: none; margin: 0 10px; }
+.social-links { margin: 20px 0; }
+.social-links a { display: inline-block; background: #333; border-radius: 50%; width: 44px; height: 44px; line-height: 44px; margin: 0 5px; font-size: 1.2em; text-decoration: none; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 2.2em; }
+  .steps { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .lang-grid { grid-template-columns: repeat(2, 1fr); }
+  .allergen-grid { grid-template-columns: repeat(2, 1fr); }
+  .photo-strip { grid-template-columns: 1fr; }
+  .pricing-card.featured { transform: scale(1); }
+}
+</style>
 </head>
 <body>
 
-<header>
-  <h1>Safe Eats Asia 🍜</h1>
-  <p>Eat safely. Explore freely.</p>
-</header>
-
-<div class="container">
-
-  <p class="tagline">Safe Eats Asia helps travellers with food allergies and dietary restrictions eat safely across Asia. Instantly analyse any dish, identify allergens and hear exactly what to say to your waiter in Thai, Khmer, Vietnamese and more.</p>
-
-  <div class="features">
-    <h2>What the app does</h2>
-    <div class="feature"><span>✅</span>Analyse any Asian dish instantly for allergens</div>
-    <div class="feature"><span>✅</span>Identifies nuts, shellfish, gluten, dairy, fish and more</div>
-    <div class="feature"><span>✅</span>Shows typical ingredients with allergen flags</div>
-    <div class="feature"><span>✅</span>Speaks the waiter phrase in the local language</div>
-    <div class="feature"><span>✅</span>Camera scan any menu — Premium feature</div>
-    <div class="feature"><span>✅</span>Works for vegan, vegetarian, halal and more</div>
-    <div class="feature"><span>🆓</span>Free to download on Android</div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>Safe Eats Asia 🍜</h1>
+    <p>Eat safely. Explore freely.</p>
+    <a href="https://play.google.com/store" class="hero-btn">📱 Download Free on Android</a>
+    <p class="hero-sub">Free to download · Premium from $2.99/month</p>
   </div>
-
-  <a class="download-btn" href="https://play.google.com/store">📱 Download on Google Play</a>
-
-  <div class="languages">
-    <h2>Languages supported 🔊</h2>
-    <div class="lang-grid">
-      <div class="lang-item">🇹🇭 Thai</div>
-      <div class="lang-item">🇰🇭 Khmer</div>
-      <div class="lang-item">🇻🇳 Vietnamese</div>
-      <div class="lang-item">🇮🇩 Indonesian</div>
-      <div class="lang-item">🇯🇵 Japanese</div>
-      <div class="lang-item">🇰🇷 Korean</div>
-      <div class="lang-item">🇲🇾 Malay</div>
-      <div class="lang-item">🇨🇳 Chinese</div>
-      <div class="lang-item">🇬🇧 English</div>
-    </div>
-  </div>
-
-  <div class="privacy" id="privacy">
-    <h2>Privacy Policy</h2>
-    <p>Last updated: April 2026</p>
-    <h3>Data we collect</h3>
-    <p>Your dietary preference selections are stored locally on your device only. We do not store or share your personal data on any external server.</p>
-    <h3>Camera</h3>
-    <p>Camera access is used only to scan menu images. Photos are sent to our AI analysis service for processing and are not stored.</p>
-    <h3>Advertising</h3>
-    <p>Free tier users see ads served by Google AdMob. AdMob may collect anonymised data for ad personalisation in accordance with Google's privacy policy.</p>
-    <h3>Contact</h3>
-    <p>For any privacy questions contact us at: <a href="mailto:privacy@safeeatsasia.com">privacy@safeeatsasia.com</a></p>
-  </div>
-
 </div>
 
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <p>Trusted by travellers with</p>
+  <div class="trust-icons">
+    <span class="trust-icon">🥜 Nut Allergy</span>
+    <span class="trust-icon">🦐 Shellfish Allergy</span>
+    <span class="trust-icon">🌾 Gluten Free</span>
+    <span class="trust-icon">🌱 Vegan</span>
+    <span class="trust-icon">🕌 Halal</span>
+    <span class="trust-icon">🥛 Dairy Free</span>
+  </div>
+</div>
+
+<!-- FOOD PHOTOS -->
+<div class="section" style="padding: 40px 20px;">
+  <div class="container">
+    <div class="photo-strip">
+      <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=600&q=80" alt="Asian street food">
+      <img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&q=80" alt="Thai food">
+      <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80" alt="Asian cuisine">
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="container">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-subtitle">Three simple steps to eating safely anywhere in Asia</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Set your profile</h3>
+        <p>Tell us your dietary restrictions and allergies once. The app remembers your profile forever.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Analyse any dish</h3>
+        <p>Type a dish name or scan a menu with your camera. Get instant allergen analysis in seconds.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Eat safely</h3>
+        <p>See exactly what's in the dish and hear what to say to your waiter in the local language.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" style="background: white;">
+  <div class="container">
+    <h2 class="section-title">Everything you need to eat safely</h2>
+    <p class="section-subtitle">Built specifically for travellers with dietary restrictions in Asia</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <div>
+          <h3>Instant dish analysis</h3>
+          <p>Type any Asian dish name and get a complete allergen breakdown in seconds powered by AI.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📷</div>
+        <div>
+          <h3>Camera menu scanning</h3>
+          <p>Point your camera at any menu — even handwritten ones — and analyse every dish at once.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔊</div>
+        <div>
+          <h3>Speak to your waiter</h3>
+          <p>Tap the speaker button to hear exactly what to say in Thai, Khmer, Vietnamese and 6 more languages.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🥘</div>
+        <div>
+          <h3>Full ingredient list</h3>
+          <p>See all typical ingredients with allergen flags so you know exactly what is in every dish.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <div>
+          <h3>Save safe dishes</h3>
+          <p>Build your personal library of safe dishes as you travel across different countries.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌶️</div>
+        <div>
+          <h3>Spice level guide</h3>
+          <p>Know how spicy each dish is before you order — from mild to very hot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ALLERGENS -->
+<div class="section">
+  <div class="container">
+    <h2 class="section-title">Allergens we detect</h2>
+    <p class="section-subtitle">Safe Eats Asia checks every dish against all major allergens</p>
+    <div class="allergen-grid">
+      <div class="allergen-card"><div class="allergen-icon">🥜</div><div class="allergen-name">Nuts</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🦐</div><div class="allergen-name">Shellfish</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🌾</div><div class="allergen-name">Gluten</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🥛</div><div class="allergen-name">Dairy</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🐟</div><div class="allergen-name">Fish</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🥚</div><div class="allergen-name">Eggs</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🫘</div><div class="allergen-name">Soy</div></div>
+      <div class="allergen-card"><div class="allergen-icon">🌱</div><div class="allergen-name">Vegan</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LANGUAGES -->
+<div class="section section-orange">
+  <div class="container">
+    <h2 class="section-title" style="color:white;">Waiter phrases in 9 languages 🔊</h2>
+    <p class="section-subtitle" style="color:white;">Tap the speaker button and show your phone to any waiter</p>
+    <div class="lang-grid">
+      <div class="lang-card"><div class="lang-flag">🇹🇭</div><div class="lang-name">Thai</div><div class="lang-sub">Thailand</div></div>
+      <div class="lang-card"><div class="lang-flag">🇰🇭</div><div class="lang-name">Khmer</div><div class="lang-sub">Cambodia</div></div>
+      <div class="lang-card"><div class="lang-flag">🇻🇳</div><div class="lang-name">Vietnamese</div><div class="lang-sub">Vietnam</div></div>
+      <div class="lang-card"><div class="lang-flag">🇮🇩</div><div class="lang-name">Indonesian</div><div class="lang-sub">Indonesia</div></div>
+      <div class="lang-card"><div class="lang-flag">🇯🇵</div><div class="lang-name">Japanese</div><div class="lang-sub">Japan</div></div>
+      <div class="lang-card"><div class="lang-flag">🇰🇷</div><div class="lang-name">Korean</div><div class="lang-sub">Korea</div></div>
+      <div class="lang-card"><div class="lang-flag">🇲🇾</div><div class="lang-name">Malay</div><div class="lang-sub">Malaysia</div></div>
+      <div class="lang-card"><div class="lang-flag">🇨🇳</div><div class="lang-name">Chinese</div><div class="lang-sub">China</div></div>
+      <div class="lang-card"><div class="lang-flag">🇬🇧</div><div class="lang-name">English</div><div class="lang-sub">Worldwide</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section" style="background: white;">
+  <div class="container">
+    <h2 class="section-title">Simple pricing</h2>
+    <p class="section-subtitle">Start free — upgrade when you need more</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Free</h3>
+        <div class="pricing-price">$0</div>
+        <ul class="pricing-features">
+          <li>5 free dish analyses</li>
+          <li>All dietary restrictions</li>
+          <li>Waiter phrases with audio</li>
+          <li>Ingredient breakdown</li>
+          <li>Watch ads for extra scans</li>
+        </ul>
+        <a href="https://play.google.com/store" class="pricing-btn pricing-btn-free">Download Free</a>
+      </div>
+      <div class="pricing-card featured">
+        <h3>Premium</h3>
+        <div class="pricing-price"><span>$</span>2.99<span>/mo</span></div>
+        <ul class="pricing-features">
+          <li>Unlimited dish analyses</li>
+          <li>Camera menu scanning</li>
+          <li>All 9 languages</li>
+          <li>No ads</li>
+          <li>Save unlimited dishes</li>
+        </ul>
+        <a href="https://play.google.com/store" class="pricing-btn pricing-btn-paid">Get Premium</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY -->
+<div class="section">
+  <div class="container">
+    <div class="privacy-section" id="privacy">
+      <h2>Privacy Policy</h2>
+      <p>Last updated: April 2026</p>
+      <h3>Data we collect</h3>
+      <p>Your dietary preference selections are stored locally on your device only. We do not store or share your personal data on any external server.</p>
+      <h3>Camera</h3>
+      <p>Camera access is used only to scan menu images. Photos are sent to our AI analysis service for processing and are not stored.</p>
+      <h3>Advertising</h3>
+      <p>Free tier users see ads served by Google AdMob. AdMob may collect anonymised data for ad personalisation in accordance with Google's privacy policy.</p>
+      <h3>Third party services</h3>
+      <p>The app uses Anthropic Claude AI for dish analysis and Microsoft Azure for text to speech audio. Please refer to their respective privacy policies for information on how they handle data.</p>
+      <h3>Contact</h3>
+      <p>For any privacy questions contact us at: <a href="mailto:privacy@safeeatsasia.com" style="color:#E8821A;">privacy@safeeatsasia.com</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 Safe Eats Asia — <a href="#privacy">Privacy Policy</a> — <a href="mailto:privacy@safeeatsasia.com">Contact</a></p>
+  <p>🍜 Safe Eats Asia — Eat safely. Explore freely.</p>
+  <div class="social-links">
+    <a href="#" title="Facebook">📘</a>
+    <a href="#" title="Instagram">📸</a>
+    <a href="#" title="TikTok">🎵</a>
+  </div>
+  <p>
+    <a href="#privacy">Privacy Policy</a>
+    <a href="mailto:privacy@safeeatsasia.com">Contact</a>
+    <a href="https://play.google.com/store">Download App</a>
+  </p>
+  <p style="margin-top:20px;">© 2026 Safe Eats Asia. All rights reserved.</p>
 </footer>
 
 </body>
