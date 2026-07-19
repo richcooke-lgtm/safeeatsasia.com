@@ -4,340 +4,624 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Safe Eats Asia — Eat Safely Across Southeast Asia</title>
-<meta name="description" content="Safe Eats Asia is a food app for travellers with dietary restrictions eating across Southeast Asia. Analyse any dish, identify allergens and hear waiter phrases in Thai, Khmer, Vietnamese and more.">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<meta name="description" content="Safe Eats Asia is an AI food safety app for travellers with allergies and dietary restrictions. Analyse any dish, scan menus and hear waiter phrases in Thai, Khmer, Vietnamese and more.">
+<link rel="canonical" href="https://safeeatsasia.com/">
+<meta name="theme-color" content="#006D6F">
+
+<!-- Social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://safeeatsasia.com/">
+<meta property="og:title" content="Safe Eats Asia — Eat Safely Across Southeast Asia">
+<meta property="og:description" content="AI dish analysis, camera menu scanning and waiter phrases in 9 languages. Built for travellers with allergies and dietary restrictions.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1559314809-0d155014e29e?w=1200&q=80">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Safe Eats Asia",
+  "operatingSystem": "Android",
+  "applicationCategory": "TravelApplication",
+  "description": "AI food safety companion for travellers with allergies and dietary restrictions in Southeast Asia.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "url": "https://safeeatsasia.com/"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Nunito', sans-serif; background: #FDF6EC; color: #2C2C2C; }
+/* ============ TOKENS ============ */
+:root {
+  --teal: #006D6F;
+  --teal-deep: #00393B;
+  --teal-tint: #E4F0EF;
+  --gold: #D4AF37;
+  --gold-bright: #F0CC5A;
+  --bg: #F7F5F0;
+  --card: #FFFFFF;
+  --ink: #1B2B2B;
+  --muted: #5C6B6B;
+  --line: #E3E0D8;
+  --safe: #2E8B57;
+  --radius: 20px;
+  --shadow: 0 6px 24px rgba(0, 57, 59, 0.09);
+  --shadow-lg: 0 18px 50px rgba(0, 57, 59, 0.16);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+}
 
-/* HERO */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ============ BASE ============ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: var(--teal); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.skip-link { position: absolute; left: -999px; top: 8px; background: var(--teal); color: #fff; padding: 10px 18px; border-radius: 8px; z-index: 300; }
+.skip-link:focus { left: 8px; }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 96px 0; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing: -0.01em; }
+.section-title { font-size: clamp(1.9rem, 4.2vw, 2.8rem); font-weight: 600; margin-bottom: 12px; }
+.section-sub { color: var(--muted); font-size: 1.05rem; max-width: 580px; margin-bottom: 52px; }
+.center { text-align: center; }
+.center .section-sub { margin-left: auto; margin-right: auto; }
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 0; transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
+}
+.nav.scrolled { background: rgba(247, 245, 240, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 11px 0; }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; transition: color 0.35s; }
+.nav.scrolled .brand { color: var(--ink); }
+.nav-links { display: flex; gap: 26px; list-style: none; }
+.nav-links a { text-decoration: none; color: rgba(255,255,255,0.9); font-weight: 600; font-size: 0.92rem; transition: color 0.25s; }
+.nav.scrolled .nav-links a { color: var(--muted); }
+.nav-links a:hover { color: var(--gold-bright); }
+.nav.scrolled .nav-links a:hover { color: var(--teal); }
+
+.btn {
+  display: inline-block; text-decoration: none; font-weight: 700; font-size: 0.98rem;
+  padding: 14px 30px; border-radius: 50px; transition: transform 0.25s, box-shadow 0.25s;
+  position: relative; overflow: hidden;
+}
+.btn-gold { background: linear-gradient(120deg, var(--gold), var(--gold-bright), var(--gold)); background-size: 200% auto; color: #2A2408; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45); animation: shimmer 4s linear infinite; }
+.btn-gold:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6); }
+.btn-teal { background: var(--teal); color: #fff; box-shadow: 0 6px 18px rgba(0, 109, 111, 0.35); }
+.btn-teal:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0, 109, 111, 0.45); }
+.btn-ghost { background: rgba(255,255,255,0.14); color: #fff; border: 1.5px solid rgba(255,255,255,0.5); backdrop-filter: blur(4px); }
+.btn-ghost:hover { background: rgba(255,255,255,0.25); transform: translateY(-3px); }
+@keyframes shimmer { to { background-position: 200% center; } }
+
+/* ============ HERO — cinematic slideshow ============ */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+.hero-slides { position: absolute; inset: 0; }
+.hero-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center;
+  opacity: 0; transform: scale(1);
+}
+.hero-slide:first-child { opacity: 1; }
+.hero-slide.leaving:first-child { opacity: 0; }
+.hero-slide.active { opacity: 1; animation: kenburns 7s ease-in-out forwards; }
+.hero-slide.leaving { opacity: 0; transition: opacity 1.6s ease; }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.09); } }
+.hero-slide.active { transition: opacity 1.6s ease; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,57,59,0.62) 0%, rgba(0,73,75,0.55) 55%, rgba(0,57,59,0.78) 100%); }
+.hero-content { position: relative; z-index: 2; padding: 120px 24px 100px; max-width: 860px; }
+.hero h1 { color: #fff; font-size: clamp(2.6rem, 6.5vw, 4.4rem); font-weight: 700; text-shadow: 0 3px 24px rgba(0,0,0,0.35); margin-bottom: 20px; }
+.hero h1 .gold { color: var(--gold-bright); }
+.hero-lede { color: rgba(255,255,255,0.94); font-size: clamp(1.05rem, 2.2vw, 1.3rem); max-width: 620px; margin: 0 auto 34px; text-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.hero-note { color: rgba(255,255,255,0.85); font-size: 0.92rem; }
+.hero-coming { color: rgba(255,255,255,0.65); font-size: 0.85rem; margin-top: 6px; }
+
+/* staggered entrance */
+.hero-content > * { opacity: 0; transform: translateY(28px); animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+.hero-content > *:nth-child(1) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.35s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.55s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.75s; }
+.hero-content > *:nth-child(5) { animation-delay: 0.9s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+.scroll-cue { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 2; color: #fff; opacity: 0.85; font-size: 1.6rem; animation: bounce 2s ease-in-out infinite; text-decoration: none; }
+@keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+
+/* ============ COUNTRY TICKER ============ */
+.ticker { background: var(--teal-deep); color: #fff; overflow: hidden; padding: 16px 0; white-space: nowrap; }
+.ticker-track { display: inline-flex; gap: 48px; animation: ticker 30s linear infinite; will-change: transform; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker-item { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.06em; opacity: 0.9; }
+.ticker-item .dot { color: var(--gold-bright); margin-right: 48px; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+
+/* ============ TRUST ============ */
+.trust { background: var(--card); border-bottom: 1px solid var(--line); padding: 28px 0; }
+.trust-inner { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 24px; }
+.trust-label { font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+.trust-item { font-size: 0.92rem; font-weight: 700; color: var(--teal); transition: transform 0.25s; }
+.trust-item:hover { transform: scale(1.12); }
+
+/* ============ STEPS ============ */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; counter-reset: step; }
+.step { background: var(--card); border-radius: var(--radius); padding: 36px 28px; box-shadow: var(--shadow); border-top: 4px solid var(--gold); transition: transform 0.3s, box-shadow 0.3s; }
+.step:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.step::before {
+  counter-increment: step; content: counter(step);
+  font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px; border-radius: 50%; background: var(--teal-tint); margin-bottom: 18px;
+  transition: transform 0.3s, background 0.3s, color 0.3s;
+}
+.step:hover::before { transform: rotate(-8deg) scale(1.1); background: var(--gold); color: #2A2408; }
+.step h3 { font-size: 1.18rem; font-weight: 600; margin-bottom: 8px; }
+.step p { color: var(--muted); font-size: 0.95rem; }
+
+/* ============ SPLIT BANDS (photo + text) ============ */
+.band { background: var(--card); }
+.band-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.band-grid.flip .band-media { order: 2; }
+.band-media { border-radius: 26px; overflow: hidden; box-shadow: var(--shadow-lg); }
+.band-media img { width: 100%; height: 400px; object-fit: cover; transition: transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+.band-media:hover img { transform: scale(1.06); }
+.band h2 { font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 600; margin-bottom: 16px; }
+.band p { color: var(--muted); margin-bottom: 14px; }
+.band-list { list-style: none; margin-top: 10px; }
+.band-list li { padding: 9px 0; font-weight: 600; display: flex; gap: 12px; align-items: baseline; }
+.band-list li::before { content: "✓"; color: var(--safe); font-weight: 800; }
+
+/* ============ FEATURES ============ */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.feature { background: var(--card); border-radius: var(--radius); padding: 30px 26px; border: 1px solid var(--line); box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+.feature:hover { transform: translateY(-7px); box-shadow: var(--shadow-lg); border-color: var(--gold); }
+.feature .icon { font-size: 2rem; margin-bottom: 14px; display: inline-block; transition: transform 0.3s; }
+.feature:hover .icon { transform: scale(1.25) rotate(-6deg); }
+.feature h3 { font-size: 1.07rem; font-weight: 600; margin-bottom: 6px; }
+.feature p { color: var(--muted); font-size: 0.92rem; }
+
+/* ============ PARALLAX QUOTE BAND ============ */
+.parallax {
+  position: relative; padding: 150px 0; background-image: url('images/pho.jpg'), url('https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=1600&q=80');
+  background-size: cover; background-position: center; background-attachment: fixed;
   text-align: center;
-  background: url('https://images.unsplash.com/photo-1559314809-0d155014e29e?w=1600&q=80') center/cover no-repeat;
 }
-.hero-overlay {
-  position: absolute; top:0; left:0; right:0; bottom:0;
-  background: linear-gradient(135deg, rgba(232,130,26,0.55), rgba(196,98,45,0.60));
+.parallax::before { content: ""; position: absolute; inset: 0; background: rgba(0, 57, 59, 0.68); }
+.parallax blockquote { position: relative; z-index: 1; color: #fff; font-family: var(--font-display); font-size: clamp(1.5rem, 3.6vw, 2.4rem); font-weight: 600; max-width: 760px; margin: 0 auto; padding: 0 24px; line-height: 1.35; }
+.parallax cite { display: block; margin-top: 18px; font-family: var(--font-body); font-style: normal; font-size: 0.95rem; color: var(--gold-bright); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ============ ALLERGENS ============ */
+.allergen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.allergen { background: var(--card); border-radius: var(--radius); padding: 26px 14px; text-align: center; box-shadow: var(--shadow); transition: transform 0.3s, box-shadow 0.3s; }
+.allergen:hover { transform: translateY(-6px) scale(1.03); box-shadow: var(--shadow-lg); }
+.allergen .icon { font-size: 2.3rem; margin-bottom: 8px; }
+.allergen .name { font-weight: 700; font-size: 0.92rem; }
+
+/* ============ LANGUAGES ============ */
+.languages { background: linear-gradient(160deg, var(--teal-deep), var(--teal) 95%); color: #fff; position: relative; overflow: hidden; }
+.languages::before, .languages::after {
+  content: ""; position: absolute; border-radius: 50%; background: rgba(255,255,255,0.05);
+  animation: drift 14s ease-in-out infinite alternate;
 }
-.hero-content { position: relative; z-index: 1; padding: 40px 20px; max-width: 800px; }
-.hero h1 { color: white; font-size: 3.5em; font-weight: 900; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); line-height: 1.1; margin-bottom: 20px; }
-.hero p { color: white; font-size: 1.4em; font-style: italic; margin-bottom: 40px; opacity: 0.95; }
-.hero-btn { display: inline-block; background: white; color: #E8821A; padding: 18px 50px; border-radius: 50px; font-size: 1.2em; font-weight: 900; text-decoration: none; box-shadow: 0 8px 25px rgba(0,0,0,0.2); transition: transform 0.2s; }
-.hero-btn:hover { transform: translateY(-2px); }
-.hero-sub { color: white; font-size: 0.95em; margin-top: 15px; opacity: 0.8; }
-.hero-coming { color: white; font-size: 0.85em; margin-top: 8px; opacity: 0.65; }
+.languages::before { width: 420px; height: 420px; top: -160px; right: -120px; }
+.languages::after { width: 320px; height: 320px; bottom: -140px; left: -100px; animation-delay: -7s; }
+@keyframes drift { to { transform: translate(40px, 30px) scale(1.1); } }
+.languages .container { position: relative; z-index: 1; }
+.languages .section-title, .languages .section-sub { color: #fff; }
+.languages .section-sub { opacity: 0.85; }
+.lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.lang { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--radius); padding: 24px; text-align: center; transition: transform 0.3s, background 0.3s; }
+.lang:hover { transform: translateY(-6px); background: rgba(255, 255, 255, 0.18); }
+.lang .flag { font-size: 2.3rem; margin-bottom: 8px; }
+.lang .name { font-weight: 700; }
+.lang .sub { font-size: 0.82rem; opacity: 0.8; margin-top: 2px; }
+.lang-coming { text-align: center; margin-top: 32px; opacity: 0.8; font-size: 0.95rem; }
 
-/* TRUST BAR */
-.trust-bar { background: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-.trust-bar p { font-size: 0.95em; color: #888; margin-bottom: 12px; }
-.trust-icons { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
-.trust-icon { background: #FDF6EC; border-radius: 50px; padding: 8px 20px; font-size: 0.9em; font-weight: 700; color: #E8821A; }
+/* ============ GALLERY ============ */
+.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.gallery-item { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); position: relative; }
+.gallery-item img { height: 260px; width: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.gallery-item:hover img { transform: scale(1.1); }
+.gallery-item figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 18px 14px;
+  background: linear-gradient(180deg, transparent, rgba(0, 57, 59, 0.85));
+  color: #fff; font-weight: 700; font-size: 0.95rem;
+  transform: translateY(8px); opacity: 0; transition: transform 0.4s, opacity 0.4s;
+}
+.gallery-item:hover figcaption { transform: none; opacity: 1; }
 
-/* SECTIONS */
-.section { padding: 80px 20px; }
-.section-dark { background: #2C2C2C; color: white; }
-.section-orange { background: linear-gradient(135deg, #E8821A, #C4622D); color: white; }
-.container { max-width: 900px; margin: 0 auto; }
-.section-title { font-size: 2em; font-weight: 900; text-align: center; margin-bottom: 15px; }
-.section-subtitle { text-align: center; font-size: 1.1em; opacity: 0.8; margin-bottom: 50px; }
+/* ============ PRICING ============ */
+.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 840px; margin: 0 auto; }
+.plan { background: var(--card); border-radius: 26px; padding: 44px 36px; box-shadow: var(--shadow); border: 1px solid var(--line); display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; }
+.plan:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.plan.featured { border: 2px solid var(--gold); box-shadow: var(--shadow-lg); position: relative; }
+.plan-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(120deg, var(--gold), var(--gold-bright)); color: #2A2408; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 16px; border-radius: 50px; }
+.plan h3 { font-size: 1.3rem; font-weight: 600; margin-bottom: 6px; }
+.plan-price { font-family: var(--font-display); font-size: 2.7rem; font-weight: 700; margin: 10px 0 22px; }
+.plan-price small { font-size: 1rem; font-weight: 500; color: var(--muted); font-family: var(--font-body); }
+.plan ul { list-style: none; margin-bottom: 28px; flex-grow: 1; text-align: left; }
+.plan li { padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; display: flex; gap: 10px; }
+.plan li::before { content: "✓"; color: var(--safe); font-weight: 800; }
+.plan .btn { text-align: center; }
+.plan .btn-teal-soft { background: var(--teal-tint); color: var(--teal); }
+.plan .btn-teal-soft:hover { transform: translateY(-3px); }
 
-/* FOOD PHOTOS */
-.photo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 0; }
-.photo-strip img { width: 100%; height: 200px; object-fit: cover; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+/* ============ FOOTER ============ */
+footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+.footer-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; }
+.footer-tag { opacity: 0.75; font-size: 0.95rem; }
+.footer-links { display: flex; gap: 26px; flex-wrap: wrap; justify-content: center; }
+.footer-links a { color: #fff; opacity: 0.85; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
+.footer-links a:hover { opacity: 1; transform: translateY(-2px); }
+.footer-fine { opacity: 0.5; font-size: 0.82rem; }
 
-/* HOW IT WORKS */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.step { text-align: center; background: white; border-radius: 20px; padding: 35px 25px; box-shadow: 0 4px 20px rgba(232,130,26,0.1); }
-.step-number { width: 60px; height: 60px; background: linear-gradient(135deg, #E8821A, #C4622D); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.6em; font-weight: 900; color: white; }
-.step h3 { font-size: 1.1em; font-weight: 800; margin-bottom: 10px; color: #E8821A; }
-.step p { font-size: 0.95em; line-height: 1.5; color: #666; }
+/* ============ SCROLL REVEALS ============ */
+.js .reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); transition-delay: var(--d, 0s); }
+.reveal.in { opacity: 1; transform: none; }
+.js .reveal-left { opacity: 0; transform: translateX(-44px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+.js .reveal-right { opacity: 0; transform: translateX(44px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+.reveal-left.in, .reveal-right.in { opacity: 1; transform: none; }
 
-/* FEATURES */
-.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.feature-card { background: white; border-radius: 16px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 15px; }
-.feature-icon { font-size: 2em; flex-shrink: 0; }
-.feature-card h3 { font-size: 1em; font-weight: 800; margin-bottom: 6px; }
-.feature-card p { font-size: 0.9em; color: #666; line-height: 1.4; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal, .reveal-left, .reveal-right, figcaption { opacity: 1 !important; transform: none !important; }
+  .hero-slide.active { opacity: 1; }
+}
 
-/* LANGUAGES */
-.lang-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.lang-card { background: rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; text-align: center; backdrop-filter: blur(10px); }
-.lang-flag { font-size: 2.5em; margin-bottom: 8px; }
-.lang-name { font-weight: 800; font-size: 1em; }
-.lang-sub { font-size: 0.8em; opacity: 0.8; margin-top: 4px; }
-.lang-coming { background: rgba(255,255,255,0.08); border: 2px dashed rgba(255,255,255,0.3); }
-.lang-coming .lang-name { opacity: 0.7; }
-.coming-soon-badge { display: inline-block; background: rgba(255,255,255,0.2); border-radius: 50px; padding: 3px 10px; font-size: 0.7em; font-weight: 800; margin-top: 6px; }
-
-/* PRICING */
-.pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-.pricing-card { background: white; border-radius: 24px; padding: 40px 30px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
-.pricing-card.featured { background: linear-gradient(135deg, #E8821A, #C4622D); color: white; transform: scale(1.03); }
-.pricing-card h3 { font-size: 1.3em; font-weight: 900; margin-bottom: 10px; }
-.pricing-price { font-size: 2.5em; font-weight: 900; margin: 15px 0; }
-.pricing-price span { font-size: 0.4em; font-weight: 600; vertical-align: top; margin-top: 10px; display: inline-block; }
-.pricing-features { list-style: none; margin: 20px 0; text-align: left; }
-.pricing-features li { padding: 8px 0; font-size: 0.95em; border-bottom: 1px solid rgba(0,0,0,0.06); }
-.pricing-card.featured .pricing-features li { border-bottom: 1px solid rgba(255,255,255,0.2); }
-.pricing-features li:before { content: "✓ "; font-weight: 900; color: #2D9B5A; }
-.pricing-card.featured .pricing-features li:before { color: white; }
-.pricing-btn { display: block; padding: 14px; border-radius: 50px; font-weight: 800; text-decoration: none; margin-top: 20px; font-size: 1em; }
-.pricing-btn-free { background: #FDF6EC; color: #E8821A; }
-.pricing-btn-paid { background: white; color: #E8821A; }
-
-/* ALLERGENS */
-.allergen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-.allergen-card { background: white; border-radius: 16px; padding: 20px 15px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-.allergen-icon { font-size: 2.5em; margin-bottom: 8px; }
-.allergen-name { font-weight: 800; font-size: 0.9em; }
-
-/* PRIVACY */
-.privacy-section { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-.privacy-section h2 { color: #E8821A; font-size: 1.5em; margin-bottom: 20px; }
-.privacy-section h3 { color: #C4622D; font-size: 1em; margin: 20px 0 8px; }
-.privacy-section p { line-height: 1.7; color: #555; font-size: 0.95em; margin-bottom: 10px; }
-
-/* FOOTER */
-footer { background: #1a1a1a; color: white; padding: 40px 20px; text-align: center; }
-footer p { opacity: 0.6; font-size: 0.9em; margin-bottom: 15px; }
-footer a { color: #E8821A; text-decoration: none; margin: 0 10px; }
-.social-links { margin: 20px 0; }
-.social-links a { display: inline-block; background: #333; border-radius: 50%; width: 44px; height: 44px; line-height: 44px; margin: 0 5px; font-size: 1.2em; text-decoration: none; }
-
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .hero h1 { font-size: 2.2em; }
-  .steps { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .lang-grid { grid-template-columns: repeat(2, 1fr); }
-  .allergen-grid { grid-template-columns: repeat(2, 1fr); }
-  .photo-strip { grid-template-columns: 1fr; }
-  .pricing-card.featured { transform: scale(1); }
+/* ============ RESPONSIVE ============ */
+@media (max-width: 900px) {
+  .steps, .features-grid, .lang-grid { grid-template-columns: repeat(2, 1fr); }
+  .band-grid { grid-template-columns: 1fr; gap: 34px; }
+  .band-grid.flip .band-media { order: 0; }
+  .parallax { background-attachment: scroll; }
+}
+@media (max-width: 640px) {
+  section { padding: 68px 0; }
+  .nav-links { display: none; }
+  .steps, .features-grid, .pricing-grid, .gallery-grid { grid-template-columns: 1fr; }
+  .allergen-grid, .lang-grid { grid-template-columns: repeat(2, 1fr); }
+  .band-media img { height: 260px; }
 }
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js');</script>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="brand" href="#top">🍜 Safe Eats Asia</a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#languages">Languages</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <a class="btn btn-gold" href="https://play.google.com/store">Download free</a>
+  </div>
+</nav>
+
+<main id="main">
 
 <!-- HERO -->
-<div class="hero">
+<header class="hero" id="top">
+  <div class="hero-slides" aria-hidden="true">
+    <img class="hero-slide" src="images/street-food.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1559314809-0d155014e29e?w=1600&q=80'" alt="">
+    <img class="hero-slide" src="images/pho.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=1600&q=80'" alt="" loading="lazy">
+    <img class="hero-slide" src="images/massaman.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=1600&q=80'" alt="" loading="lazy">
+    <img class="hero-slide" src="images/fried-rice.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=1600&q=80'" alt="" loading="lazy">
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1>Safe Eats Asia 🍜</h1>
-    <p>Eat safely across Southeast Asia.</p>
-    <p style="color:white; font-size:1em; margin-bottom:30px; font-style:normal; opacity:0.9; font-weight:700; letter-spacing:0.02em;">Thailand · Cambodia · Vietnam · Indonesia · Malaysia · Philippines · Myanmar · Laos · Singapore</p>
-    <a href="https://play.google.com/store" class="hero-btn">📱 Download Free on Android</a>
-    <p class="hero-sub">Free to download · Premium from $2.99/month</p>
-    <p class="hero-coming">Northeast & South Asia coming soon</p>
-  </div>
-</div>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <p>Built for travellers with</p>
-  <div class="trust-icons">
-    <span class="trust-icon">🥜 Nut Allergy</span>
-    <span class="trust-icon">🦐 Shellfish Allergy</span>
-    <span class="trust-icon">🌾 Gluten Free</span>
-    <span class="trust-icon">🌱 Vegan</span>
-    <span class="trust-icon">🕌 Halal</span>
-    <span class="trust-icon">🥛 Dairy Free</span>
-  </div>
-</div>
-
-<!-- FOOD PHOTOS -->
-<div class="section" style="padding: 40px 20px;">
-  <div class="container">
-    <div class="photo-strip">
-      <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80" alt="Vegetarian egg fried rice">
-      <img src="https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&q=80" alt="Vietnamese pho">
-      <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80" alt="Thai massaman curry">
+    <h1>Eat safely.<br><span class="gold">Explore freely.</span></h1>
+    <p class="hero-lede">The AI food companion for travellers with allergies and dietary restrictions. Analyse any dish, scan any menu and speak to any waiter — across all of Southeast Asia.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="https://play.google.com/store">📱 Download free on Android</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
     </div>
+    <p class="hero-note">Free to download · Premium from $2.99/month</p>
+    <p class="hero-coming">Northeast &amp; South Asia coming soon</p>
+  </div>
+  <a class="scroll-cue" href="#how" aria-label="Scroll down">⌄</a>
+</header>
+
+<!-- COUNTRY TICKER -->
+<div class="ticker" aria-label="Countries covered">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">THAILAND <span class="dot">·</span> CAMBODIA <span class="dot">·</span> VIETNAM <span class="dot">·</span> INDONESIA <span class="dot">·</span> MALAYSIA <span class="dot">·</span> PHILIPPINES <span class="dot">·</span> MYANMAR <span class="dot">·</span> LAOS <span class="dot">·</span> SINGAPORE <span class="dot">·</span></span>
+    <span class="ticker-item" aria-hidden="true">THAILAND <span class="dot">·</span> CAMBODIA <span class="dot">·</span> VIETNAM <span class="dot">·</span> INDONESIA <span class="dot">·</span> MALAYSIA <span class="dot">·</span> PHILIPPINES <span class="dot">·</span> MYANMAR <span class="dot">·</span> LAOS <span class="dot">·</span> SINGAPORE <span class="dot">·</span></span>
+  </div>
+</div>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="container trust-inner">
+    <span class="trust-label">Built for travellers with</span>
+    <span class="trust-item">🥜 Nut allergy</span>
+    <span class="trust-item">🦐 Shellfish allergy</span>
+    <span class="trust-item">🌾 Gluten free</span>
+    <span class="trust-item">🌱 Vegan</span>
+    <span class="trust-item">🕌 Halal</span>
+    <span class="trust-item">🥛 Dairy free</span>
   </div>
 </div>
 
 <!-- HOW IT WORKS -->
-<div class="section">
-  <div class="container">
-    <h2 class="section-title">How it works</h2>
-    <p class="section-subtitle">Three simple steps to eating safely anywhere in Southeast Asia</p>
+<section id="how">
+  <div class="container center">
+    <h2 class="section-title reveal">How it works</h2>
+    <p class="section-sub reveal">Three simple steps to eating safely anywhere in Southeast Asia.</p>
     <div class="steps">
-      <div class="step">
-        <div class="step-number">1</div>
+      <div class="step reveal" style="--d:0s">
         <h3>Set your profile</h3>
         <p>Tell us your dietary restrictions and allergies once. The app remembers your profile forever.</p>
       </div>
-      <div class="step">
-        <div class="step-number">2</div>
+      <div class="step reveal" style="--d:0.15s">
         <h3>Analyse any dish</h3>
         <p>Type a dish name or scan a menu with your camera. Get instant allergen analysis in seconds.</p>
       </div>
-      <div class="step">
-        <div class="step-number">3</div>
+      <div class="step reveal" style="--d:0.3s">
         <h3>Eat safely</h3>
         <p>See exactly what's in the dish and hear what to say to your waiter in the local language.</p>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- SPLIT BAND 1 -->
+<section class="band">
+  <div class="container band-grid">
+    <div class="band-media reveal-left">
+      <img src="images/massaman.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=800&q=80'" alt="Bowl of Thai massaman curry" loading="lazy" width="800" height="400">
+    </div>
+    <div class="reveal-right">
+      <h2>Know every dish before you order</h2>
+      <p>Type the name of any Southeast Asian dish and the AI breaks it down in seconds — so nothing on the menu is a mystery again.</p>
+      <ul class="band-list">
+        <li>Full ingredient list with allergen flags</li>
+        <li>Dietary compatibility for your profile</li>
+        <li>Spice level from mild to very hot</li>
+        <li>Save safe dishes to your personal library</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT BAND 2 -->
+<section class="band" style="padding-top: 0;">
+  <div class="container band-grid flip">
+    <div class="band-media reveal-right">
+      <img src="images/fried-rice.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=800&q=80'" alt="Vegetarian egg fried rice" loading="lazy" width="800" height="400">
+    </div>
+    <div class="reveal-left">
+      <h2>Scan any menu with your camera</h2>
+      <p>Point your phone at any menu — printed or handwritten, even in Thai or Khmer script — and every dish is analysed at once.</p>
+      <ul class="band-list">
+        <li>Works on handwritten local menus</li>
+        <li>Every dish checked against your allergies</li>
+        <li>Waiter phrases with audio playback</li>
+        <li>Results in seconds, wherever you are</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <!-- FEATURES -->
-<div class="section" style="background: white;">
-  <div class="container">
-    <h2 class="section-title">Everything you need to eat safely</h2>
-    <p class="section-subtitle">Built specifically for travellers with dietary restrictions in Southeast Asia</p>
+<section id="features">
+  <div class="container center">
+    <h2 class="section-title reveal">Everything you need to eat safely</h2>
+    <p class="section-sub reveal">Built specifically for travellers with dietary restrictions in Southeast Asia.</p>
     <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🔍</div>
-        <div>
-          <h3>Instant dish analysis</h3>
-          <p>Type any Southeast Asian dish name and get a complete allergen breakdown in seconds powered by AI.</p>
-        </div>
+      <div class="feature reveal" style="--d:0s">
+        <div class="icon">🔍</div>
+        <h3>Instant dish analysis</h3>
+        <p>Type any Southeast Asian dish name and get a complete allergen breakdown in seconds, powered by AI.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">📷</div>
-        <div>
-          <h3>Camera menu scanning</h3>
-          <p>Point your camera at any menu — even handwritten ones in Thai or Khmer script — and analyse every dish at once.</p>
-        </div>
+      <div class="feature reveal" style="--d:0.1s">
+        <div class="icon">📷</div>
+        <h3>Camera menu scanning</h3>
+        <p>Point your camera at any menu — even handwritten ones in Thai or Khmer script — and analyse every dish at once.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔊</div>
-        <div>
-          <h3>Speak to your waiter</h3>
-          <p>Tap the speaker button to hear exactly what to say in Thai, Khmer, Vietnamese and 6 more languages.</p>
-        </div>
+      <div class="feature reveal" style="--d:0.2s">
+        <div class="icon">🔊</div>
+        <h3>Speak to your waiter</h3>
+        <p>Tap the speaker button to hear exactly what to say in Thai, Khmer, Vietnamese and 6 more languages.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🥘</div>
-        <div>
-          <h3>Full ingredient list</h3>
-          <p>See all typical ingredients with allergen flags so you know exactly what is in every dish.</p>
-        </div>
+      <div class="feature reveal" style="--d:0s">
+        <div class="icon">🥘</div>
+        <h3>Full ingredient list</h3>
+        <p>See all typical ingredients with allergen flags so you know exactly what is in every dish.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">💾</div>
-        <div>
-          <h3>Save safe dishes</h3>
-          <p>Build your personal library of safe dishes as you travel across different countries.</p>
-        </div>
+      <div class="feature reveal" style="--d:0.1s">
+        <div class="icon">💾</div>
+        <h3>Save safe dishes</h3>
+        <p>Build your personal library of safe dishes as you travel across different countries.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">🌶️</div>
-        <div>
-          <h3>Spice level guide</h3>
-          <p>Know how spicy each dish is before you order — from mild to very hot.</p>
-        </div>
+      <div class="feature reveal" style="--d:0.2s">
+        <div class="icon">🌶️</div>
+        <h3>Spice level guide</h3>
+        <p>Know how spicy each dish is before you order — from mild to very hot.</p>
       </div>
     </div>
   </div>
+</section>
+
+<!-- PARALLAX BAND -->
+<div class="parallax" role="img" aria-label="Bowl of Vietnamese pho">
+  <blockquote>
+    "I can travel anywhere in Asia without worrying about what I eat."
+    The feeling every traveller deserves
+  </blockquote>
 </div>
 
 <!-- ALLERGENS -->
-<div class="section">
-  <div class="container">
-    <h2 class="section-title">Allergens we detect</h2>
-    <p class="section-subtitle">Safe Eats Asia checks every dish against all major allergens</p>
+<section>
+  <div class="container center">
+    <h2 class="section-title reveal">Allergens we detect</h2>
+    <p class="section-sub reveal">Safe Eats Asia checks every dish against all major allergens.</p>
     <div class="allergen-grid">
-      <div class="allergen-card"><div class="allergen-icon">🥜</div><div class="allergen-name">Nuts</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🦐</div><div class="allergen-name">Shellfish</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🌾</div><div class="allergen-name">Gluten</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🥛</div><div class="allergen-name">Dairy</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🐟</div><div class="allergen-name">Fish</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🥚</div><div class="allergen-name">Eggs</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🫘</div><div class="allergen-name">Soy</div></div>
-      <div class="allergen-card"><div class="allergen-icon">🌱</div><div class="allergen-name">Vegan</div></div>
+      <div class="allergen reveal" style="--d:0s"><div class="icon">🥜</div><div class="name">Nuts</div></div>
+      <div class="allergen reveal" style="--d:0.07s"><div class="icon">🦐</div><div class="name">Shellfish</div></div>
+      <div class="allergen reveal" style="--d:0.14s"><div class="icon">🌾</div><div class="name">Gluten</div></div>
+      <div class="allergen reveal" style="--d:0.21s"><div class="icon">🥛</div><div class="name">Dairy</div></div>
+      <div class="allergen reveal" style="--d:0.28s"><div class="icon">🐟</div><div class="name">Fish</div></div>
+      <div class="allergen reveal" style="--d:0.35s"><div class="icon">🥚</div><div class="name">Eggs</div></div>
+      <div class="allergen reveal" style="--d:0.42s"><div class="icon">🫘</div><div class="name">Soy</div></div>
+      <div class="allergen reveal" style="--d:0.49s"><div class="icon">🌱</div><div class="name">Vegan</div></div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- LANGUAGES -->
-<div class="section section-orange">
-  <div class="container">
-    <h2 class="section-title" style="color:white;">Waiter phrases in 9 languages 🔊</h2>
-    <p class="section-subtitle" style="color:white;">Tap the speaker button (where available) and show your phone to any waiter across Southeast Asia</p>
+<section class="languages" id="languages">
+  <div class="container center">
+    <h2 class="section-title reveal">Waiter phrases in 9 languages 🔊</h2>
+    <p class="section-sub reveal">Tap the speaker button (where available) and show your phone to any waiter across Southeast Asia.</p>
     <div class="lang-grid">
-      <div class="lang-card"><div class="lang-flag">🇹🇭</div><div class="lang-name">Thai</div><div class="lang-sub">Thailand</div></div>
-      <div class="lang-card"><div class="lang-flag">🇰🇭</div><div class="lang-name">Khmer</div><div class="lang-sub">Cambodia</div></div>
-      <div class="lang-card"><div class="lang-flag">🇻🇳</div><div class="lang-name">Vietnamese</div><div class="lang-sub">Vietnam</div></div>
-      <div class="lang-card"><div class="lang-flag">🇮🇩</div><div class="lang-name">Indonesian</div><div class="lang-sub">Indonesia</div></div>
-      <div class="lang-card"><div class="lang-flag">🇲🇾</div><div class="lang-name">Malay</div><div class="lang-sub">Malaysia</div></div>
-      <div class="lang-card"><div class="lang-flag">🇵🇭</div><div class="lang-name">Filipino</div><div class="lang-sub">Philippines</div></div>
-      <div class="lang-card"><div class="lang-flag">🇲🇲</div><div class="lang-name">Burmese</div><div class="lang-sub">Myanmar</div></div>
-      <div class="lang-card"><div class="lang-flag">🇱🇦</div><div class="lang-name">Lao</div><div class="lang-sub">Laos</div></div>
-      <div class="lang-card"><div class="lang-flag">🇸🇬</div><div class="lang-name">English</div><div class="lang-sub">Singapore & worldwide</div></div>
+      <div class="lang reveal" style="--d:0s"><div class="flag">🇹🇭</div><div class="name">Thai</div><div class="sub">Thailand</div></div>
+      <div class="lang reveal" style="--d:0.07s"><div class="flag">🇰🇭</div><div class="name">Khmer</div><div class="sub">Cambodia</div></div>
+      <div class="lang reveal" style="--d:0.14s"><div class="flag">🇻🇳</div><div class="name">Vietnamese</div><div class="sub">Vietnam</div></div>
+      <div class="lang reveal" style="--d:0.21s"><div class="flag">🇮🇩</div><div class="name">Indonesian</div><div class="sub">Indonesia</div></div>
+      <div class="lang reveal" style="--d:0.28s"><div class="flag">🇲🇾</div><div class="name">Malay</div><div class="sub">Malaysia</div></div>
+      <div class="lang reveal" style="--d:0.35s"><div class="flag">🇵🇭</div><div class="name">Filipino</div><div class="sub">Philippines</div></div>
+      <div class="lang reveal" style="--d:0.42s"><div class="flag">🇲🇲</div><div class="name">Burmese</div><div class="sub">Myanmar</div></div>
+      <div class="lang reveal" style="--d:0.49s"><div class="flag">🇱🇦</div><div class="name">Lao</div><div class="sub">Laos</div></div>
+      <div class="lang reveal" style="--d:0.56s"><div class="flag">🇸🇬</div><div class="name">English</div><div class="sub">Singapore &amp; worldwide</div></div>
     </div>
-    <p style="color:white; text-align:center; margin-top:30px; opacity:0.75; font-size:0.95em;">🇨🇳🇯🇵🇰🇷🇭🇰 Northeast Asia &amp; 🇮🇳🇱🇰 South Asia coming soon</p>
+    <p class="lang-coming reveal">🇨🇳🇯🇵🇰🇷🇭🇰 Northeast Asia &amp; 🇮🇳🇱🇰 South Asia coming soon</p>
   </div>
-</div>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <div class="container center">
+    <h2 class="section-title reveal">The food is the point</h2>
+    <p class="section-sub reveal">Southeast Asia has some of the world's greatest food. You shouldn't have to miss out.</p>
+    <div class="gallery-grid">
+      <figure class="gallery-item reveal" style="--d:0s">
+        <img src="images/fried-rice.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&q=80'" alt="Vegetarian egg fried rice" loading="lazy" width="600" height="520">
+        <figcaption>Egg fried rice · Vegetarian</figcaption>
+      </figure>
+      <figure class="gallery-item reveal" style="--d:0.12s">
+        <img src="images/pho.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&q=80'" alt="Vietnamese pho" loading="lazy" width="600" height="520">
+        <figcaption>Pho · Vietnam</figcaption>
+      </figure>
+      <figure class="gallery-item reveal" style="--d:0.24s">
+        <img src="images/massaman.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600&q=80'" alt="Thai massaman curry" loading="lazy" width="600" height="520">
+        <figcaption>Massaman curry · Thailand</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- PRICING -->
-<div class="section" style="background: white;">
-  <div class="container">
-    <h2 class="section-title">Simple pricing</h2>
-    <p class="section-subtitle">Start free — upgrade when you need more</p>
+<section id="pricing" style="padding-top: 0;">
+  <div class="container center">
+    <h2 class="section-title reveal">Simple pricing</h2>
+    <p class="section-sub reveal">Start free — upgrade when you need more.</p>
     <div class="pricing-grid">
-      <div class="pricing-card">
+      <div class="plan reveal" style="--d:0s">
         <h3>Free</h3>
-        <div class="pricing-price">$0</div>
-        <ul class="pricing-features">
+        <div class="plan-price">$0</div>
+        <ul>
           <li>5 free dish analyses</li>
           <li>All dietary restrictions</li>
           <li>Waiter phrases with audio</li>
           <li>Ingredient breakdown</li>
           <li>Watch ads for extra scans</li>
         </ul>
-        <a href="https://play.google.com/store" class="pricing-btn pricing-btn-free">Download Free</a>
+        <a class="btn btn-teal-soft" href="https://play.google.com/store">Download free</a>
       </div>
-      <div class="pricing-card featured">
+      <div class="plan featured reveal" style="--d:0.15s">
+        <span class="plan-badge">Most popular</span>
         <h3>Premium</h3>
-        <div class="pricing-price"><span>$</span>2.99<span>/mo</span></div>
-        <ul class="pricing-features">
+        <div class="plan-price">$2.99<small>/month</small></div>
+        <ul>
           <li>Unlimited dish analyses</li>
           <li>Camera menu scanning</li>
           <li>All 9 languages</li>
           <li>No ads</li>
           <li>Save unlimited dishes</li>
         </ul>
-        <a href="https://play.google.com/store" class="pricing-btn pricing-btn-paid">Get Premium</a>
+        <a class="btn btn-gold" href="https://play.google.com/store">Get Premium</a>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- PRIVACY -->
-<div class="section">
-  <div class="container">
-    <div class="privacy-section" id="privacy">
-      <h2>Privacy Policy</h2>
-      <p>Last updated: April 2026</p>
-      <h3>Data we collect</h3>
-      <p>Your dietary preference selections are stored locally on your device only. We do not store or share your personal data on any external server.</p>
-      <h3>Camera</h3>
-      <p>Camera access is used only to scan menu images. Photos are sent to our AI analysis service for processing and are not stored.</p>
-      <h3>Advertising</h3>
-      <p>Free tier users see ads served by Google AdMob. AdMob may collect anonymised data for ad personalisation in accordance with Google's privacy policy.</p>
-      <h3>Third party services</h3>
-      <p>The app uses Anthropic Claude AI for dish analysis and Microsoft Azure for text to speech audio. Please refer to their respective privacy policies for information on how they handle data.</p>
-      <h3>Contact</h3>
-      <p>For any privacy questions contact us at: <a href="/cdn-cgi/l/email-protection#cfbfbda6b9aeacb68fbcaea9aaaaaebbbcaebca6aee1aca0a2" style="color:#E8821A;"><span class="__cf_email__" data-cfemail="1464667d6275776d54677572717175606775677d753a777b79">[email&#160;protected]</span></a></p>
-    </div>
-  </div>
-</div>
+</main>
 
 <!-- FOOTER -->
 <footer>
-  <p>🍜 Safe Eats Asia — Eat safely. Explore freely.</p>
-  <div class="social-links">
-    <a href="#" title="Facebook">📘</a>
-    <a href="#" title="Instagram">📸</a>
-    <a href="#" title="TikTok">🎵</a>
+  <div class="container footer-inner">
+    <div class="footer-brand">🍜 Safe Eats Asia</div>
+    <p class="footer-tag">Eat safely. Explore freely.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:privacy@safeeatsasia.com">Contact</a>
+      <a href="https://play.google.com/store">Google Play</a>
+    </div>
+    <p class="footer-fine">© 2026 Safe Eats Asia</p>
   </div>
-  <p>
-    <a href="#privacy">Privacy Policy</a>
-    <a href="/cdn-cgi/l/email-protection#5222203b2433312b12213334373733262133213b337c31
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Sticky nav — solid after scrolling past hero top
+  var nav = document.getElementById('nav');
+  function onScroll() {
+    if (window.scrollY > 60) { nav.classList.add('scrolled'); }
+    else { nav.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hero slideshow with crossfade + Ken Burns zoom
+  var slides = document.querySelectorAll('.hero-slide');
+  var current = 0;
+  slides[0].classList.add('active');
+  if (!reduced && slides.length > 1) {
+    setInterval(function () {
+      var prev = current;
+      current = (current + 1) % slides.length;
+      slides[prev].classList.remove('active');
+      slides[prev].classList.add('leaving');
+      slides[current].classList.remove('leaving');
+      // restart the zoom animation
+      slides[current].style.animation = 'none';
+      void slides[current].offsetWidth;
+      slides[current].style.animation = '';
+      slides[current].classList.add('active');
+    }, 6000);
+  }
+
+  // Scroll reveals
+  var items = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  if (reduced || !('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  items.forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
