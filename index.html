@@ -234,9 +234,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing
   position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 18px 14px;
   background: linear-gradient(180deg, transparent, rgba(0, 57, 59, 0.85));
   color: #fff; font-weight: 700; font-size: 0.95rem;
-  transform: translateY(8px); opacity: 0; transition: transform 0.4s, opacity 0.4s;
 }
-.gallery-item:hover figcaption { transform: none; opacity: 1; }
 
 /* ============ PRICING ============ */
 .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; max-width: 840px; margin: 0 auto; }
@@ -254,6 +252,12 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing
 .plan .btn-teal-soft { background: var(--teal-tint); color: var(--teal); }
 .plan .btn-teal-soft:hover { transform: translateY(-3px); }
 
+/* ============ SAFETY ============ */
+.safety { padding: 0 0 96px; }
+.safety-card { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: var(--radius); padding: 30px 34px; max-width: 840px; margin: 0 auto; box-shadow: var(--shadow); }
+.safety-card h2 { font-family: var(--font-body); font-size: 1.02rem; font-weight: 800; margin-bottom: 8px; color: var(--ink); }
+.safety-card p { color: var(--muted); font-size: 0.93rem; }
+
 /* ============ FOOTER ============ */
 footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
@@ -263,6 +267,8 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 .footer-links a { color: #fff; opacity: 0.85; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
 .footer-links a:hover { opacity: 1; transform: translateY(-2px); }
 .footer-fine { opacity: 0.5; font-size: 0.82rem; }
+
+.btn .cta-short { display: none; }
 
 /* ============ SCROLL REVEALS ============ */
 .js .reveal { opacity: 0; transform: translateY(34px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); transition-delay: var(--d, 0s); }
@@ -287,6 +293,8 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 }
 @media (max-width: 640px) {
   section { padding: 68px 0; }
+  .cta-long { display: none; }
+  .btn .cta-short { display: inline; }
   .nav-links { display: none; }
   .steps, .features-grid, .pricing-grid, .gallery-grid { grid-template-columns: 1fr; }
   .allergen-grid, .lang-grid { grid-template-columns: repeat(2, 1fr); }
@@ -308,7 +316,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
       <li><a href="#languages">Languages</a></li>
       <li><a href="#pricing">Pricing</a></li>
     </ul>
-    <a class="btn btn-gold" href="https://play.google.com/store">Download free on Android</a>
+    <a class="btn btn-gold" href="https://play.google.com/store"><span class="cta-long">Download free on Android</span><span class="cta-short">Get the app</span></a>
   </div>
 </nav>
 
@@ -325,7 +333,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <h1>Eat safely.<br><span class="gold">Explore freely.</span></h1>
-    <p class="hero-lede">The ultimate food companion for travellers with allergies and dietary restrictions. Analyse any dish, scan any menu and speak to any waiter — across all of Southeast Asia.</p>
+    <p class="hero-lede">The food companion for travellers with allergies and dietary restrictions. Analyse any dish, scan any menu and speak to your waiter — across Southeast Asia.</p>
     <div class="hero-ctas">
       <a class="btn btn-gold" href="https://play.google.com/store">📱 Download free on Android</a>
       <a class="btn btn-ghost" href="#how">See how it works</a>
@@ -365,7 +373,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
     <div class="steps">
       <div class="step reveal" style="--d:0s">
         <h3>Set your profile</h3>
-        <p>Tell us your dietary restrictions and allergies once. The app remembers your profile forever.</p>
+        <p>Tell us your dietary restrictions and allergies once. The app saves your dietary profile on your device.</p>
       </div>
       <div class="step reveal" style="--d:0.15s">
         <h3>Analyse any dish</h3>
@@ -460,8 +468,8 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 <!-- PARALLAX BAND -->
 <div class="parallax" role="img" aria-label="Bowl of Vietnamese pho">
   <blockquote>
-    "I can travel anywhere in Asia without worrying about what I eat."
-    The feeling every traveller deserves
+    Travel anywhere in Asia without worrying about what you eat.
+    Our promise to every traveller
   </blockquote>
 </div>
 
@@ -469,7 +477,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 <section>
   <div class="container center">
     <h2 class="section-title reveal">Allergens we detect</h2>
-    <p class="section-sub reveal">Safe Eats Asia checks every dish against all major allergens.</p>
+    <p class="section-sub reveal">Safe Eats Asia checks dishes against all major allergens.</p>
     <div class="allergen-grid">
       <div class="allergen reveal" style="--d:0s"><div class="icon">🥜</div><div class="name">Nuts</div></div>
       <div class="allergen reveal" style="--d:0.07s"><div class="icon">🦐</div><div class="name">Shellfish</div></div>
@@ -499,7 +507,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
       <div class="lang reveal" style="--d:0.49s"><div class="flag">🇱🇦</div><div class="name">Lao</div><div class="sub">Laos</div></div>
       <div class="lang reveal" style="--d:0.56s"><div class="flag">🇸🇬</div><div class="name">English</div><div class="sub">Singapore &amp; worldwide</div></div>
     </div>
-    <p class="lang-coming reveal">🇨🇳🇯🇵🇰🇷🇭🇰 Northeast Asia &amp; 🇮🇳🇱🇰 South Asia coming soon</p>
+    <p class="lang-coming reveal">Coming soon: Northeast Asia (China, Japan, South Korea, Hong Kong) &amp; South Asia (India, Sri Lanka)</p>
   </div>
 </section>
 
@@ -556,6 +564,16 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
         </ul>
         <a class="btn btn-gold" href="https://play.google.com/store">Get Premium</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY NOTE -->
+<section class="safety" aria-label="Important safety information">
+  <div class="container">
+    <div class="safety-card reveal">
+      <h2>⚠️ Important safety information</h2>
+      <p>Safe Eats Asia provides AI-generated guidance to help you ask the right questions — it is not a guarantee of safety. Ingredients and preparation vary between restaurants, recipes differ by region, and cross-contamination is always possible. If you have a severe allergy, always confirm directly with restaurant staff before ordering, and carry your prescribed medication.</p>
     </div>
   </div>
 </section>
