@@ -58,7 +58,7 @@
 
 /* ============ BASE ============ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; display: block; }
 a { color: var(--teal); }
@@ -80,8 +80,10 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing
   padding: 16px 0; transition: background 0.35s, box-shadow 0.35s, padding 0.35s;
 }
 .nav.scrolled { background: rgba(247, 245, 240, 0.92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 11px 0; }
-.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.brand { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; transition: color 0.35s; }
+.nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.nav .btn { white-space: nowrap; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; text-decoration: none; transition: color 0.35s; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
+.logo-mark { width: 30px; height: 30px; flex-shrink: 0; display: block; }
 .nav.scrolled .brand { color: var(--ink); }
 .nav-links { display: flex; gap: 26px; list-style: none; }
 .nav-links a { text-decoration: none; color: rgba(255,255,255,0.9); font-weight: 600; font-size: 0.92rem; transition: color 0.25s; }
@@ -196,7 +198,7 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing
 }
 .parallax::before { content: ""; position: absolute; inset: 0; background: rgba(0, 57, 59, 0.68); }
 .parallax blockquote { position: relative; z-index: 1; color: #fff; font-family: var(--font-display); font-size: clamp(1.5rem, 3.6vw, 2.4rem); font-weight: 600; max-width: 760px; margin: 0 auto; padding: 0 24px; line-height: 1.35; }
-.parallax cite { display: block; margin-top: 18px; font-family: var(--font-body); font-style: normal; font-size: 0.95rem; color: var(--gold-bright); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.parallax .promise-by { display: block; margin-top: 18px; font-family: var(--font-body); font-style: normal; font-size: 0.95rem; color: var(--gold-bright); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ============ ALLERGENS ============ */
 .allergen-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -261,7 +263,8 @@ h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; letter-spacing
 /* ============ FOOTER ============ */
 footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
-.footer-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; }
+.footer-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; }
+.footer-brand .logo-mark { width: 34px; height: 34px; }
 .footer-tag { opacity: 0.75; font-size: 0.95rem; }
 .footer-links { display: flex; gap: 26px; flex-wrap: wrap; justify-content: center; }
 .footer-links a { color: #fff; opacity: 0.85; text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: opacity 0.2s, transform 0.2s; display: inline-block; }
@@ -295,6 +298,9 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
   section { padding: 68px 0; }
   .cta-long { display: none; }
   .btn .cta-short { display: inline; }
+  .brand { font-size: 1.02rem; gap: 7px; }
+  .logo-mark { width: 26px; height: 26px; }
+  .nav .btn { padding: 10px 18px; font-size: 0.88rem; }
   .nav-links { display: none; }
   .steps, .features-grid, .pricing-grid, .gallery-grid { grid-template-columns: 1fr; }
   .allergen-grid, .lang-grid { grid-template-columns: repeat(2, 1fr); }
@@ -309,7 +315,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 
 <nav class="nav" id="nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <a class="brand" href="#top">🍜 Safe Eats Asia</a>
+    <a class="brand" href="#top"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#00494B"/><rect x="13" y="27" width="38" height="7" rx="3.5" fill="#D4AF37"/><path d="M15 34a17 17 0 0 0 34 0z" fill="#F7F5F0"/><rect x="26" y="49" width="12" height="4.5" rx="2.25" fill="#F7F5F0"/><polyline points="25,39 30,44 40,34" fill="none" stroke="#006D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M32 22c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M42 21c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/></svg> Safe Eats Asia</a>
     <ul class="nav-links">
       <li><a href="#how">How it works</a></li>
       <li><a href="#features">Features</a></li>
@@ -469,7 +475,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 <div class="parallax" role="img" aria-label="Bowl of Vietnamese pho">
   <blockquote>
     Travel anywhere in Asia without worrying about what you eat.
-    Our promise to every traveller
+    <span class="promise-by">Our promise to every traveller</span>
   </blockquote>
 </div>
 
@@ -507,7 +513,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
       <div class="lang reveal" style="--d:0.49s"><div class="flag">🇱🇦</div><div class="name">Lao</div><div class="sub">Laos</div></div>
       <div class="lang reveal" style="--d:0.56s"><div class="flag">🇸🇬</div><div class="name">English</div><div class="sub">Singapore &amp; worldwide</div></div>
     </div>
-    <p class="lang-coming reveal">Coming soon: Northeast Asia (China, Japan, South Korea, Hong Kong) &amp; South Asia (India, Sri Lanka)</p>
+    <p class="lang-coming reveal">Coming soon: Northeast Asia (China, Japan, South Korea, Hong Kong) &amp; South Asia (India, Sri Lanka, Pakistan, Bangladesh)</p>
   </div>
 </section>
 
@@ -583,7 +589,7 @@ footer { background: var(--teal-deep); color: #fff; padding: 60px 0 42px; }
 <!-- FOOTER -->
 <footer>
   <div class="container footer-inner">
-    <div class="footer-brand">🍜 Safe Eats Asia</div>
+    <div class="footer-brand"><svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#00494B"/><rect x="13" y="27" width="38" height="7" rx="3.5" fill="#D4AF37"/><path d="M15 34a17 17 0 0 0 34 0z" fill="#F7F5F0"/><rect x="26" y="49" width="12" height="4.5" rx="2.25" fill="#F7F5F0"/><polyline points="25,39 30,44 40,34" fill="none" stroke="#006D6F" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M32 22c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M42 21c-2-2.5-2-5 0-7.5" stroke="#F0CC5A" stroke-width="3" fill="none" stroke-linecap="round"/></svg> Safe Eats Asia</div>
     <p class="footer-tag">Eat safely. Explore freely.</p>
     <div class="footer-links">
       <a href="privacy.html">Privacy Policy</a>
